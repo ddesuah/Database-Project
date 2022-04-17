@@ -1,0 +1,86 @@
+import java.util.PriorityQueue;
+import java.util.Scanner;
+import java.io.*;
+import java.lang.Math;
+import java.lang.reflect.Array;
+public class Schedule {
+
+	public static void main(String[] args) throws IOException {
+		// TODO Auto-generated method stub
+		Scanner user = new Scanner (System.in);
+		
+		
+		System.out.println("How many workers work here?");
+		int num = user.nextInt();
+		
+Scanner input = new Scanner(new File("Standard.txt"));
+
+
+PriorityQueue<Integer> pq = new PriorityQueue<Integer>();
+for (int i =0; i<10; i++) {
+	pq.add(input.nextInt());
+}
+
+	System.out.println(pq);
+	
+int [][] job=new int[num][pq.size()];	
+job[0][0]=pq.remove();
+job[1][0]=pq.remove();
+int currentNum1 = job[0][0];
+int currentNum2 = job[1][0];
+
+int tot1 = job[0][0];
+int tot2 = job[1][0];
+int count1 =0;
+int count2=0;
+for (int q = 0; q<pq.size();q++) {
+	
+	if (job[0][count1]>job[1][count2]) {
+		count2++;
+		job[1][count2]=pq.remove();
+		tot2 += job[1][count2];
+	}
+		if (job[0][count1]<job[1][count2]) {
+			count1++;
+			job[1][count1]=pq.remove();
+			tot1 += job[1][count1];
+		}
+		
+	
+}
+Scanner input2 = new Scanner(new File("Weighted.txt"));
+
+PriorityQueue<Integer> pq2 = new PriorityQueue<Integer>();
+PriorityQueue<Integer> pq3 = new PriorityQueue<Integer>();
+
+for (int i =0; i<10; i++) {
+	pq2.add(input2.nextInt());
+	pq3.add(input2.nextInt());
+
+}
+int priority=0; 
+int weightList [][] = new int [pq2.size()][2];
+int step1=0;
+int step2=0;
+weightList[0][0]=pq2.remove();
+weightList[0][1]= pq2.remove();
+for (int t =0; t<(pq2.size());t++) {
+	for (int p =0;p<pq3.size();p++) {
+		if (pq3.remove()==p) {
+			if(weightList[step1][0]<weightList[step2][1]) {
+				weightList[step1+1][0]=pq2.remove();
+				step1++;
+				if(weightList[step1][0]>weightList[step2][1]) {
+					weightList[step2+1][0]=pq2.remove();
+					step2++;
+			}
+		}
+	}
+	
+}
+
+	System.out.println(pq2);
+	}
+
+}
+	}
